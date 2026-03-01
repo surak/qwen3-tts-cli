@@ -1,4 +1,5 @@
 import os
+import subprocess
 import time
 from pathlib import Path
 from typing import Optional
@@ -11,7 +12,20 @@ def write_audio(path: str, audio, sample_rate: int):
         audio = audio.asnumpy()
     elif hasattr(audio, 'cpu'):
         audio = audio.cpu().numpy()
-    sf.write(path, audio, sample_rate)
+
+    audio_format = Path(path).suffix.lower()
+    
+    if audio_format == ".mp3":
+        wav_path = path.replace(".mp3", ".wav")
+        sf.write(wav_path, audio, sample_rate)
+        subprocess.run(
+            ["ffmpeg", "-y", "-i", wav_path, "-codec:a", "libmp3lame", "-q:a", "2", path],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        os.remove(wav_path)
+    else:
+        sf.write(path, audio, sample_rate)
 
 
 class TTSGenerator:

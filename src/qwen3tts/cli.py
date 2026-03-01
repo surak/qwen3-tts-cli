@@ -47,8 +47,8 @@ def main():
     parser.add_argument(
         "--format",
         choices=["wav", "mp3"],
-        default="wav",
-        help="Output audio format (default: wav)",
+        default="mp3",
+        help="Output audio format (default: mp3)",
     )
 
     parser.add_argument(
