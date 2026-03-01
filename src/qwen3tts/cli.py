@@ -6,7 +6,7 @@ from pathlib import Path
 from qwen3tts.generate import TTSGenerator
 
 
-DEFAULT_MODEL_PATH = "models/Qwen3-TTS-12Hz-1.7B-Base"
+DEFAULT_MODEL_PATH = "models/Qwen3-TTS-12Hz-1.7B-VoiceDesign"
 DEFAULT_OUTPUT_DIR = "output"
 
 
@@ -41,7 +41,7 @@ def main():
     parser.add_argument(
         "-m", "--model",
         default=DEFAULT_MODEL_PATH,
-        help=f"Path to model directory (default: models/Qwen3-TTS-12Hz-1.7B-Base)",
+        help=f"Path to model directory (default: models/Qwen3-TTS-12Hz-1.7B-VoiceDesign)",
     )
 
     parser.add_argument(
@@ -90,8 +90,8 @@ def main():
     parser.add_argument(
         "--backend",
         choices=["mlx", "transformers"],
-        default="transformers",
-        help="Backend to use for TTS (default: transformers)",
+        default="mlx",
+        help="Backend to use for TTS (default: mlx)",
     )
 
     args = parser.parse_args()
