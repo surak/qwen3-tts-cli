@@ -18,6 +18,15 @@ Text-to-speech using Qwen3-TTS models on macOS. Accepts input from text files or
 brew install ffmpeg sox
 ```
 
+## Known Issues
+
+On Mac (non-NVIDIA GPU), you may see this warning:
+```
+Warning: flash-attn is not installed. Will only run the manual PyTorch version.
+```
+
+This is expected - flash-attn only works with NVIDIA CUDA GPUs. The fallback works fine on Mac.
+
 ## Installation
 
 ```bash
