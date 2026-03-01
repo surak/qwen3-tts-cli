@@ -122,9 +122,8 @@ class TTSGenerator:
         ref_audio = None
         ref_text = None
         if self.model_type == "base" and self.speaker_audio:
-            from mlx_audio.audio_io import read as audio_read
-            ref_audio, sr = audio_read(self.speaker_audio)
-            ref_audio = mx.array(ref_audio)
+            from mlx_audio.utils import load_audio
+            ref_audio = load_audio(self.speaker_audio, sample_rate=model.sample_rate)
             
             if self.speaker_text:
                 with open(self.speaker_text) as f:
