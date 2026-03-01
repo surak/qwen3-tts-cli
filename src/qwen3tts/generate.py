@@ -122,23 +122,43 @@ class TTSGenerator:
         ref_audio = None
         ref_text = None
         if self.model_type == "base" and self.speaker_audio:
-            import librosa
-            ref_audio, sr = librosa.load(self.speaker_audio, sr=24000, mono=True)
+            from mlx_audio.audio_io import read as audio_read
+            ref_audio, sr = audio_read(self.speaker_audio)
             ref_audio = mx.array(ref_audio)
+            
             if self.speaker_text:
                 with open(self.speaker_text) as f:
                     ref_text = f.read()
+            else:
+                if self.verbose:
+                    print("Ref_text not found. Transcribing ref_audio...")
+                from mlx_audio.stt import load
+                stt_model = load("mlx-community/whisper-large-v3-turbo-asr-fp16")
+                ref_text = stt_model.generate(ref_audio).text
+                if self.verbose:
+                    print(f"Ref_text: {ref_text}")
+                del stt_model
+                mx.clear_cache()
         
         # Generate using MLX
-        results = model.generate(
-            text=text,
-            voice=voice,
-            temperature=0.6,
-            top_p=0.8,
-            verbose=self.verbose,
-            ref_audio=ref_audio,
-            ref_text=ref_text,
-        )
+        if self.model_type == "base" and ref_audio is not None:
+            results = model.generate(
+                text=text,
+                lang_code="English",
+                temperature=0.6,
+                top_p=0.8,
+                verbose=self.verbose,
+                ref_audio=ref_audio,
+                ref_text=ref_text,
+            )
+        else:
+            results = model.generate(
+                text=text,
+                voice=voice,
+                temperature=0.6,
+                top_p=0.8,
+                verbose=self.verbose,
+            )
         
         # Collect audio from results
         audio_segments = []
