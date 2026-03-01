@@ -96,7 +96,9 @@ def main():
 
     args = parser.parse_args()
 
-    if args.voice_design and args.model == DEFAULT_MODEL_PATH:
+    if args.voice_audio and args.model == DEFAULT_MODEL_PATH:
+        args.model = "models/Qwen3-TTS-12Hz-1.7B-Base"
+    elif args.voice_design and args.model == DEFAULT_MODEL_PATH:
         args.model = "models/Qwen3-TTS-12Hz-1.7B-VoiceDesign"
     elif args.voice_name and args.model == DEFAULT_MODEL_PATH:
         args.model = "models/Qwen3-TTS-12Hz-1.7B-CustomVoice"
