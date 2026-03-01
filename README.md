@@ -38,6 +38,18 @@ uv sync
 uv pip install -e .
 ```
 
+### MLX-Audio Upgrade (Required for Voice Cloning)
+
+For voice cloning with MLX backend, upgrade to mlx-audio 0.3.1 (required for native m4a support and auto-transcription):
+
+```bash
+# Activate the virtual environment first
+source .venv/bin/activate
+
+# Upgrade mlx-audio (requires --prerelease due to transformers 5.0 dependency)
+uv pip install mlx-audio==0.3.1 --prerelease=allow
+```
+
 ## Downloading Model Weights
 
 Models are available from [Qwen](https://huggingface.co/Qwen) on HuggingFace. Download the original (non-MLX) models:
@@ -61,8 +73,12 @@ huggingface-cli download Qwen/Qwen3-TTS-12Hz-1.7B-Base --local-dir models/Qwen3-
 
 ## Note on MLX Backend
 
-The MLX community models (e.g., `mlx-community/Qwen3-TTS-12Hz-1.7B-VoiceDesign-8bit`) have compatibility issues with the current mlx-audio library and produce noise. Use the **original Qwen models** with the default transformers backend for reliable results.
-```
+The MLX backend now works with the original Qwen models (downloaded above). Make sure to:
+1. Upgrade mlx-audio to 0.3.1 (see Installation section)
+2. Use the **original Qwen models** (not MLX community converted models)
+3. Place models in the `models/` directory as shown above
+
+## Usage
 
 ## Usage
 
