@@ -1,0 +1,35 @@
+[project]
+name = "qwen3tts"
+version = "0.1.0"
+description = "Qwen3-TTS CLI for macOS"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "qwen-tts>=0.1.0",
+    "tqdm>=4.66.0",
+    "soundfile>=0.12.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "ruff>=0.4.0",
+]
+transformers = [
+    "transformers>=4.40.0",
+    "torchaudio>=2.5.0",
+    "torch>=2.0.0",
+]
+
+[project.scripts]
+qwen3tts = "qwen3tts.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = []
+
+[tool.ruff]
+target-version = "py310"
