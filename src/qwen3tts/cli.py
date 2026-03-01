@@ -6,7 +6,7 @@ from pathlib import Path
 from qwen3tts.generate import TTSGenerator
 
 
-DEFAULT_MODEL_PATH = "models/Qwen3-TTS-12Hz-1.7B-Base-8bit"
+DEFAULT_MODEL_PATH = "models/Qwen3-TTS-12Hz-1.7B-Base"
 DEFAULT_OUTPUT_DIR = "output"
 
 
@@ -41,7 +41,7 @@ def main():
     parser.add_argument(
         "-m", "--model",
         default=DEFAULT_MODEL_PATH,
-        help=f"Path to model directory (default: {DEFAULT_MODEL_PATH})",
+        help=f"Path to model directory (default: models/Qwen3-TTS-12Hz-1.7B-Base)",
     )
 
     parser.add_argument(
@@ -95,6 +95,11 @@ def main():
     )
 
     args = parser.parse_args()
+
+    if args.voice_design and args.model == DEFAULT_MODEL_PATH:
+        args.model = "models/Qwen3-TTS-12Hz-1.7B-VoiceDesign"
+    elif args.voice_name and args.model == DEFAULT_MODEL_PATH:
+        args.model = "models/Qwen3-TTS-12Hz-1.7B-CustomVoice"
 
     if args.voice_audio and not os.path.exists(args.voice_audio):
         print(f"Error: Reference audio file not found: {args.voice_audio}", file=sys.stderr)

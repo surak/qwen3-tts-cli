@@ -62,7 +62,7 @@ The MLX community models (e.g., `mlx-community/Qwen3-TTS-12Hz-1.7B-VoiceDesign-8
 Create a voice using a text description:
 
 ```bash
-python -m qwen3tts input.txt -o output.wav \
+uv run qwen3tts input.txt -o output.wav \
     --voice-design "female, British narrator, calm and professional" \
     -v
 ```
@@ -72,7 +72,7 @@ python -m qwen3tts input.txt -o output.wav \
 Use built-in voices (Ryan, Aiden, etc.):
 
 ```bash
-python -m qwen3tts input.txt -o output.wav \
+uv run qwen3tts input.txt -o output.wav \
     --voice-name Ryan \
     --voice-style excited \
     -v
@@ -92,13 +92,13 @@ mkdir -p voices
 # Option 1: With transcript (better quality)
 echo "Transcript of your reference audio here" > voices/ref.txt
 
-python -m qwen3tts input.txt -o output.wav \
+uv run qwen3tts input.txt -o output.wav \
     --voice-audio voices/ref.wav \
     --voice-text voices/ref.txt \
     -v
 
 # Option 2: Without transcript (faster, uses voice embedding only)
-python -m qwen3tts input.txt -o output.wav \
+uv run qwen3tts input.txt -o output.wav \
     --voice-audio voices/ref.wav \
     -v
 ```
@@ -107,17 +107,17 @@ python -m qwen3tts input.txt -o output.wav \
 
 ```bash
 # Read from stdin
-echo "Hello world" | python -m qwen3tts - -o hello.wav
+echo "Hello world" | uv run qwen3tts - -o hello.wav
 
 # Or use - as input file
-cat myfile.txt | python -m qwen3tts - -o output.wav
+cat myfile.txt | uv run qwen3tts - -o output.wav
 ```
 
 ### MP3 Output
 
 ```bash
 # Requires ffmpeg installed
-python -m qwen3tts input.txt -o output.mp3 --format mp3
+uv run qwen3tts input.txt -o output.mp3 --format mp3
 ```
 
 ## Project Structure
